@@ -14,7 +14,7 @@ export const globalRateLimiter = new RateLimiterRedis({
 // "Rate limiting for write operations like create, update and delete"
 export const writeOperationsLimiter = rateLimit({
   windowMs: 1 * 60 * 1000,
-  max: 100,
+  max: 20,
   standardHeaders: true,
   legacyHeaders: false,
   handler: (req, res) => {
@@ -43,7 +43,7 @@ export const readOperationsLimiter = rateLimit({
 
 export const deleteOperationsLimiter = rateLimit({
   windowMs: 1 * 60 * 1000,
-  max: 10,
+  max: 20,
   standardHeaders: true,
   legacyHeaders: false,
   handler: (req, res) => {

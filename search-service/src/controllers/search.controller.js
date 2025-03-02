@@ -9,6 +9,27 @@ export const handleSearch = asyncHandler(async (req, res) => {
 
   const { query } = req.query;
 
+  const cacheKey = `search:${query}`;
+  let cachedPost;
+
+  try {
+    cachedPost = await req.redisClient.get(cacheKey);
+
+    if (cachedPost) {
+      return res
+        .status(200)
+        .json(
+          new ApiResponse(
+            200,
+            "Search Result fetched from Cache successfully",
+            JSON.parse(cachedPost)
+          )
+        );
+    }
+  } catch (redisError) {
+    logger.error(`redis error!, caching failed: ${redisError.message}`);
+  }
+
   const results = await Search.find(
     {
       $text: { $search: query },
@@ -22,6 +43,12 @@ export const handleSearch = asyncHandler(async (req, res) => {
 
   if (!results) {
     throw new ApiError(404, "Can't fetch search Results");
+  }
+
+  try {
+    await req.redisClient.set(cacheKey, JSON.stringify(results), "EX", 300);
+  } catch (redisError) {
+    logger.error(`failed to save posts in cache: ${redisError.message}`);
   }
 
   return res
