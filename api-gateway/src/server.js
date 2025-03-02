@@ -122,7 +122,7 @@ app.use(
 
 // [setting up proxy for search service]
 app.use(
-  "/v1/posts",
+  "/v1/search",
   validateToken,
   proxy(process.env.SEARCH_SERVICE, {
     ...proxyOptions,

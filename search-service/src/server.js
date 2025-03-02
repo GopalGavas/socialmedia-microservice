@@ -8,7 +8,10 @@ import { connectDB } from "./database/db.js";
 import { connectToRabbitMQ, consumeEvent } from "./utils/rabbitmq.js";
 import { logger } from "./utils/logger.js";
 import { ApiError } from "./utils/apiError.js";
-import { handleSearchPost } from "./event/searchEventHandler.js";
+import {
+  handlePostCreated,
+  handlePostDeleted,
+} from "./event/searchEventHandler.js";
 
 const startServer = async () => {
   try {
@@ -21,7 +24,8 @@ const startServer = async () => {
       throw new ApiError(500, "Failed to connect to RabbitMq ");
     }
 
-    await consumeEvent("post.created", handleSearchPost);
+    await consumeEvent("post.created", handlePostCreated);
+    await consumeEvent("post-deleted", handlePostDeleted);
 
     app.on("error", (error) => {
       logger.error("Error: ", error);
