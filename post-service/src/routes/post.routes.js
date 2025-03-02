@@ -11,7 +11,7 @@ import {
   writeOperationsLimiter,
   readOperationsLimiter,
   deleteOperationsLimiter,
-} from "../middlewares/ratingLimiting.middleware.js";
+} from "../middlewares/rateLimiter.middleware.js";
 
 const router = Router();
 
@@ -22,7 +22,7 @@ router.route("/all-posts").get(readOperationsLimiter, getAllPosts);
 router
   .route("/:postId")
   .get(readOperationsLimiter, getPostById)
-  .delete(deletePostById)
+  .delete(deleteOperationsLimiter, deletePostById)
   .put(writeOperationsLimiter, updatePostById);
 
 export default router;
