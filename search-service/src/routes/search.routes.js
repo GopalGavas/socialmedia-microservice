@@ -5,7 +5,7 @@ import { rateLimitingForFullTextSearch } from "../middlewares/rateLimiter.middle
 
 const router = Router();
 
-app.use(authenticateRequest);
+router.use(authenticateRequest);
 
 router.route("/posts").get(rateLimitingForFullTextSearch, handleSearch);
 
