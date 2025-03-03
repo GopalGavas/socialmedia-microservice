@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
-import { errorHandler } from "./middlewares/errorhandler.middleware.js";
+import { errorHandler } from "./middlewares/errorHandler.middleware.js";
 import { logger } from "./utils/logger.js";
 import { globalRateLimiter } from "./middlewares/rateLimiter.middleware.js";
 import { redisClient } from "./database/redisClient.js";

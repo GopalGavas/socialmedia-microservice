@@ -25,7 +25,7 @@ const startServer = async () => {
 
     const PORT = process.env.PORT || 8003;
     app.listen(PORT, () => {
-      logger.info(`Identity service running on port ${PORT}`);
+      logger.info(`Media service running on port ${PORT}`);
     });
   } catch (error) {
     logger.error("Startup Error:", error);

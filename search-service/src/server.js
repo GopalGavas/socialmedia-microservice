@@ -33,7 +33,7 @@ const startServer = async () => {
 
     const PORT = process.env.PORT || 8004;
     app.listen(PORT, () => {
-      logger.info(`Identity service running on port ${PORT}`);
+      logger.info(`Search service running on port ${PORT}`);
     });
   } catch (error) {
     logger.error("Startup Error:", error);
